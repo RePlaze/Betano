@@ -1,10 +1,13 @@
 package com.example.betano;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +21,6 @@ public class RecordActivity extends AppCompatActivity {
     private LinearLayout scoresLayout;
     private SharedPreferences preferences;
     private static final String PREFS_NAME = "MyPrefs";
-    private int score; // Game score
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +30,13 @@ public class RecordActivity extends AppCompatActivity {
         scoresLayout = findViewById(R.id.scores_layout);
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
-        // Example scores
-        preferences.edit().putInt("Score1", 135).apply();
-        preferences.edit().putInt("Score2", 87).apply();
-        preferences.edit().putInt("Score3", 17).apply();
-
-        score = getIntent().getIntExtra("score", 0); // Get the game score from the intent
-
         displayScores();
 
         LinearLayout menuLayout = findViewById(R.id.menu_layout);
         menuLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToMainActivity();
+                onBackPressed();
             }
         });
     }
@@ -56,7 +51,7 @@ public class RecordActivity extends AppCompatActivity {
             }
         }
 
-        scores.add(score); // Add the current game score
+        scores.add(getIntent().getIntExtra("score", 0)); // Add the current game score
 
         // Sort the scores in descending order
         Collections.sort(scores, Collections.reverseOrder());
@@ -78,15 +73,45 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     private void addScoreToLayout(int rank, int score) {
-        TextView textView = new TextView(this);
-        textView.setTextAppearance(this, android.R.style.TextAppearance_Medium); // Apply default text style
-        textView.setText("Rank " + rank + ": " + score);
-        scoresLayout.addView(textView);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        TextView rankTextView = new TextView(this);
+        rankTextView.setLayoutParams(params);
+        rankTextView.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        rankTextView.setText(" " + rank + ". ");
+        rankTextView.setTextSize(32); // Increase text size
+        rankTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        rankTextView.setTypeface(null, Typeface.BOLD_ITALIC);
+
+        TextView scoreTextView = new TextView(this);
+        scoreTextView.setLayoutParams(params);
+        scoreTextView.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        scoreTextView.setText(String.valueOf(score));
+        scoreTextView.setTextSize(32); // Increase text size
+        scoreTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        scoreTextView.setTypeface(null, Typeface.BOLD_ITALIC);
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setGravity(Gravity.CENTER_VERTICAL); // Center align vertically
+        layout.addView(rankTextView);
+        layout.addView(scoreTextView);
+
+        // Add left margin to rank text view
+        LinearLayout.LayoutParams rankParams = (LinearLayout.LayoutParams) rankTextView.getLayoutParams();
+        rankParams.setMarginStart(60);
+        rankTextView.setLayoutParams(rankParams);
+
+        scoresLayout.addView(layout);
     }
 
-    private void goToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
+
 }

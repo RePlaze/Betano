@@ -7,8 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
@@ -18,8 +16,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     private SharedPreferences preferences;
 
-    private static final String PREFS_NAME = "MyPrefs";
-    private static final String GAME_SCORE_KEY = "GameScore";
+    public static final String PREFS_NAME = "MyPrefs";
+    public static final String GAME_SCORE_KEY = "Game1Score";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,57 +29,11 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 
-        // Start a new game with a score of 0
         score = 0;
-        scoreTextView.setText(String.valueOf(score));
+        updateScoreText();
 
+        // Set up the touch listener for the ball
         soccerBallImageView.setOnTouchListener(this);
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            int[] ballLocation = new int[2];
-            soccerBallImageView.getLocationOnScreen(ballLocation);
-            int ballX = ballLocation[0];
-            int ballY = ballLocation[1];
-
-            int touchX = (int) event.getRawX();
-            int touchY = (int) event.getRawY();
-
-            int ballCenterX = ballX + soccerBallImageView.getWidth() / 2;
-            int ballCenterY = ballY + soccerBallImageView.getHeight() / 2;
-            double distance = Math.sqrt(Math.pow(touchX - ballCenterX, 2) + Math.pow(touchY - ballCenterY, 2));
-
-            int threshold = 200;
-
-            if (distance < threshold) {
-                increaseScore();
-                return true;
-            } else {
-                endGame();
-                return false;
-            }
-        }
-        return false;
-    }
-
-    private void increaseScore() {
-        score++;
-        scoreTextView.setText(String.valueOf(score));
-    }
-
-    private void endGame() {
-        saveScoreToPreferences();
-
-        // Display a toast message to indicate a miss
-        Toast.makeText(this, "Missed!", Toast.LENGTH_SHORT).show();
-
-        // Start the ResultActivity and pass the score
-        Intent intent = new Intent(GameActivity.this, ResultActivity.class);
-        intent.putExtra("score", score);
-        startActivity(intent);
-        finish();
     }
 
     @Override
@@ -90,23 +42,55 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         saveScoreToPreferences();
     }
 
+    private void updateScoreText() {
+        String scoreText = "Score: " + score;
+        scoreTextView.setText(scoreText);
+    }
+
     private void saveScoreToPreferences() {
-        preferences.edit().putInt(GAME_SCORE_KEY, score).apply();
+        int highScore = preferences.getInt(GAME_SCORE_KEY, 0);
+        if (score > highScore) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(GAME_SCORE_KEY, score);
+            editor.apply();
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        score = preferences.getInt(GAME_SCORE_KEY, 0);
-        scoreTextView.setText(String.valueOf(score));
-    }
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            // Get the current position of the soccer ball
+            int[] ballLocation = new int[2];
+            soccerBallImageView.getLocationOnScreen(ballLocation);
+            int ballX = ballLocation[0];
+            int ballY = ballLocation[1];
 
-    public void showRecordActivity(View view) {
-        // Save the score and navigate to the RecordActivity
-        saveScoreToPreferences();
-        Intent intent = new Intent(GameActivity.this, RecordActivity.class);
-        intent.putExtra("score", score);
-        startActivity(intent);
-        finish();
+            // Get the touch coordinates
+            int touchX = (int) event.getRawX();
+            int touchY = (int) event.getRawY();
+
+            // Calculate the distance between the touch point and the ball center
+            int ballCenterX = ballX + soccerBallImageView.getWidth() / 2;
+            int ballCenterY = ballY + soccerBallImageView.getHeight() / 2;
+            double distance = Math.sqrt(Math.pow(touchX - ballCenterX, 2) + Math.pow(touchY - ballCenterY, 2));
+
+            // Define the threshold for a successful hit (adjust as needed)
+            int threshold = 200;
+
+            if (distance < threshold) {
+                // Increment the score and update the text view
+                score++;
+                updateScoreText();
+            } else {
+                // Save the score and navigate to the ResultActivity
+                saveScoreToPreferences();
+                Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+                intent.putExtra("score", score);
+                startActivity(intent);
+                finish();
+            }
+        }
+
+        return true;
     }
 }

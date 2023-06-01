@@ -29,35 +29,18 @@
         android:fontFamily="sans-serif-condensed"
         android:textColor="@android:color/white"
         android:text="Record"
-        android:textSize="42sp"
+        android:textSize="46sp"
         android:textStyle="bold" />
-
-    <LinearLayout
-        android:id="@+id/score_rank_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/record_text"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/score_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/scores_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/score_rank_layout"
+        android:layout_below="@id/record_text"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginTop="20dp" />
+        android:padding="16dp" />
 
     <LinearLayout
         android:id="@+id/menu_layout"

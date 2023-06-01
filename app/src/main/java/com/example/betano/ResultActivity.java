@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
+import android.os.Handler;
 import android.widget.TextView;
-import com.google.android.material.card.MaterialCardView;
+
+import com.example.betano.MainActivity;
 
 public class ResultActivity extends AppCompatActivity {
+    private static final int DELAY_TIME = 2500; // 2 seconds delay
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,31 @@ public class ResultActivity extends AppCompatActivity {
         int totalScore = getIntent().getIntExtra("score", 0);
 
         TextView scoreTextView = findViewById(R.id.total_score_text_view);
-        scoreTextView.setText(String.valueOf(totalScore));
+        scoreTextView.setText("You Score: " + totalScore);
+
+        // Delay and navigate to MainActivity
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                addScoreToRecord(totalScore);
+                goToMainActivity();
+            }
+        }, DELAY_TIME);
+    }
+
+    private void addScoreToRecord(int score) {
+        // Save the score to the record
+        String prefsName = "MyPrefs";
+        SharedPreferences preferences = getSharedPreferences(prefsName, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        int currentScore = preferences.getInt("GameScore", 0);
+        editor.putInt("GameScore", currentScore + score);
+        editor.apply();
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

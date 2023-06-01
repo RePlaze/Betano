@@ -18,7 +18,7 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:text="Score"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textColor="@color/orange" />
 
     <ImageView

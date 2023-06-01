@@ -2,16 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/text_color">
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/result_image" />
 
     <TextView
         android:id="@+id/total_score_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:textColor="@color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
+        android:textSize="48sp"
+        android:textStyle="bold|italic"
         android:text="0" />
 
 </RelativeLayout>
