@@ -41,8 +41,27 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            increaseScore();
-            return true;
+            int[] ballLocation = new int[2];
+            soccerBallImageView.getLocationOnScreen(ballLocation);
+            int ballX = ballLocation[0];
+            int ballY = ballLocation[1];
+
+            int touchX = (int) event.getRawX();
+            int touchY = (int) event.getRawY();
+
+            int ballCenterX = ballX + soccerBallImageView.getWidth() / 2;
+            int ballCenterY = ballY + soccerBallImageView.getHeight() / 2;
+            double distance = Math.sqrt(Math.pow(touchX - ballCenterX, 2) + Math.pow(touchY - ballCenterY, 2));
+
+            int threshold = 200;
+
+            if (distance < threshold) {
+                increaseScore();
+                return true;
+            } else {
+                endGame();
+                return false;
+            }
         }
         return false;
     }
@@ -50,6 +69,19 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private void increaseScore() {
         score++;
         scoreTextView.setText(String.valueOf(score));
+    }
+
+    private void endGame() {
+        saveScoreToPreferences();
+
+        // Display a toast message to indicate a miss
+        Toast.makeText(this, "Missed!", Toast.LENGTH_SHORT).show();
+
+        // Start the ResultActivity and pass the score
+        Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+        intent.putExtra("score", score);
+        startActivity(intent);
+        finish();
     }
 
     @Override
