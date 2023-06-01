@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/v0_32" />
+
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="350dp"
+        android:layout_height="180dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
+
+    <RelativeLayout
+        android:id="@+id/exit_layout"
+        android:layout_width="332dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_button_background">
+
+        <TextView
+            android:id="@+id/exit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Exit"
+            android:textColor="@color/orange"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/record_layout"
+        android:layout_width="332dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/exit_layout"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/rounded_button_background">
+
+        <TextView
+            android:id="@+id/record_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Record"
+            android:textColor="@color/orange"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/start_game_layout"
+        android:layout_width="332dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/record_layout"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/rounded_button_background">
+
+        <TextView
+            android:id="@+id/start_game_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Start"
+            android:textColor="@color/orange"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

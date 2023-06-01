@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="toolbar" type="id" />
+    <item name="appbarLayout" type="id" />
+    <item name="difficultCard" type="id" />
+    <item name="easyCard" type="id" />
+</resources>
