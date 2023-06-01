@@ -2,17 +2,16 @@ package com.example.betano;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
-
-import com.example.betano.MainActivity;
-
 public class ResultActivity extends AppCompatActivity {
     private static final int DELAY_TIME = 2500; // 2 seconds delay
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +23,9 @@ public class ResultActivity extends AppCompatActivity {
         scoreTextView.setText("You Score: " + totalScore);
 
         // Delay and navigate to MainActivity
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                addScoreToRecord(totalScore);
-                goToMainActivity();
-            }
+        new Handler().postDelayed(() -> {
+            addScoreToRecord(totalScore);
+            goToMainActivity();
         }, DELAY_TIME);
     }
 

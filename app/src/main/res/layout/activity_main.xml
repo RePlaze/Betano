@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
-            android:text="Exit"
+            android:text="@string/exit"
             android:textColor="@color/orange"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
-            android:text="Record"
+            android:text="@string/record"
             android:textColor="@color/orange"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
-            android:text="Start"
+            android:text="@string/start"
             android:textColor="@color/orange"
             android:textSize="40sp"
             android:textStyle="bold" />

@@ -20,6 +20,6 @@
         android:textColor="@color/white"
         android:textSize="48sp"
         android:textStyle="bold|italic"
-        android:text="0" />
+        android:text="@string/_0" />
 
 </RelativeLayout>

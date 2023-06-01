@@ -1,5 +1,6 @@
 package com.example.betano;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public static final String PREFS_NAME = "MyPrefs";
     public static final String GAME_SCORE_KEY = "Game1Score";
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

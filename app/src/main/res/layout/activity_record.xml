@@ -28,7 +28,7 @@
         android:layout_marginTop="74dp"
         android:fontFamily="sans-serif-condensed"
         android:textColor="@android:color/white"
-        android:text="Record"
+        android:text="@string/recordTitle"
         android:textSize="46sp"
         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
-            android:text="Menu"
+            android:text="@string/menu"
             android:textColor="@color/orange"
             android:textSize="40sp"
             android:textStyle="bold" />

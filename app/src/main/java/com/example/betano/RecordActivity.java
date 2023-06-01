@@ -3,7 +3,6 @@ package com.example.betano;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -54,7 +53,7 @@ public class RecordActivity extends AppCompatActivity {
         scores.add(getIntent().getIntExtra("score", 0)); // Add the current game score
 
         // Sort the scores in descending order
-        Collections.sort(scores, Collections.reverseOrder());
+        scores.sort(Collections.reverseOrder());
 
         scoresLayout.removeAllViews(); // Clear existing scores layout
 
