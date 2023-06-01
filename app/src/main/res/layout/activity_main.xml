@@ -22,12 +22,13 @@
         android:id="@+id/exit_layout"
         android:layout_width="332dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/rounded_button_background">
+        android:background="@drawable/rounded_button_background"
+        tools:ignore="TextSizeCheck">
 
         <TextView
             android:id="@+id/exit_text"
@@ -36,7 +37,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/exit"
-            android:textColor="@color/orange"
+            android:textColor="#EF6C00"
             android:textSize="40sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -45,12 +46,13 @@
         android:id="@+id/record_layout"
         android:layout_width="332dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         android:layout_above="@id/exit_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/rounded_button_background">
+        android:background="@drawable/rounded_button_background"
+        tools:ignore="TextSizeCheck">
 
         <TextView
             android:id="@+id/record_text"
@@ -59,7 +61,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/record"
-            android:textColor="@color/orange"
+            android:textColor="#EF6C00"
             android:textSize="40sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -68,12 +70,13 @@
         android:id="@+id/start_game_layout"
         android:layout_width="332dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
         android:layout_above="@id/record_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginBottom="18dp"
-        android:background="@drawable/rounded_button_background">
+        android:background="@drawable/rounded_button_background"
+        tools:ignore="TextSizeCheck">
 
         <TextView
             android:id="@+id/start_game_text"
@@ -82,7 +85,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/start"
-            android:textColor="@color/orange"
+            android:textColor="#EF6C00"
             android:textSize="40sp"
             android:textStyle="bold" />
     </RelativeLayout>

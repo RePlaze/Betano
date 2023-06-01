@@ -3,23 +3,26 @@ package com.example.betano;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-public class RecordActivity extends AppCompatActivity {
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class RecordActivity1 extends AppCompatActivity {
     private LinearLayout scoresLayout;
-    private SharedPreferences preferences;
+    private ScoreDao scoreDao;
     private static final String PREFS_NAME = "MyPrefs";
+    private CompositeDisposable compositeDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,8 @@ public class RecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_record);
 
         scoresLayout = findViewById(R.id.scores_layout);
-        preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        scoreDao = AppDatabase.getInstance(getApplicationContext()).scoreDao();
+        compositeDisposable = new CompositeDisposable();
 
         displayScores();
 
@@ -36,27 +40,31 @@ public class RecordActivity extends AppCompatActivity {
     }
 
     private void displayScores() {
-        Map<String, ?> scoreMap = preferences.getAll();
+        Flowable<List<Score>> scoreFlowable = scoreDao.getAllScores()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-        List<Integer> scores = new ArrayList<>();
-        for (Map.Entry<String, ?> entry : scoreMap.entrySet()) {
-            if (entry.getValue() instanceof Integer) {
-                scores.add((Integer) entry.getValue());
-            }
+        compositeDisposable.add(scoreFlowable.subscribe(this::updateScoresLayout, Throwable::printStackTrace));
+    }
+
+    private void updateScoresLayout(List<Score> scores) {
+        List<Integer> scoreValues = new ArrayList<>();
+        for (Score score : scores) {
+            scoreValues.add(score.getValue());
         }
 
-        scores.add(getIntent().getIntExtra("score", 0)); // Add the current game score
+        scoreValues.add(getIntent().getIntExtra("score", 0)); // Add the current game score
 
         // Sort the scores in descending order
-        scores.sort(Collections.reverseOrder());
+        scoreValues.sort(Collections.reverseOrder());
 
         scoresLayout.removeAllViews(); // Clear existing scores layout
 
         int rank = 1;
-        for (int i = 0; i < scores.size(); i++) {
-            int currentScore = scores.get(i);
+        for (int i = 0; i < scoreValues.size(); i++) {
+            int currentScore = scoreValues.get(i);
 
-            if (i > 0 && currentScore == scores.get(i - 1)) {
+            if (i > 0 && currentScore == scoreValues.get(i - 1)) {
                 // Skip adding the score if it is the same as the previous one
                 continue;
             }
@@ -74,15 +82,15 @@ public class RecordActivity extends AppCompatActivity {
 
         TextView rankTextView = new TextView(this);
         rankTextView.setLayoutParams(params);
-        rankTextView.setTextAppearance(this, android.R.style.TextAppearance_Medium);
-        rankTextView.setText(" " + rank + ". ");
+        rankTextView.setTextAppearance(android.R.style.TextAppearance_Medium);
+//        rankTextView.setText(getString(R.string.record_rank, rank));
         rankTextView.setTextSize(32); // Increase text size
         rankTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
         rankTextView.setTypeface(null, Typeface.BOLD_ITALIC);
 
         TextView scoreTextView = new TextView(this);
         scoreTextView.setLayoutParams(params);
-        scoreTextView.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        scoreTextView.setTextAppearance(android.R.style.TextAppearance_Medium);
         scoreTextView.setText(String.valueOf(score));
         scoreTextView.setTextSize(32); // Increase text size
         scoreTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
@@ -106,6 +114,9 @@ public class RecordActivity extends AppCompatActivity {
         scoresLayout.addView(layout);
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
 }

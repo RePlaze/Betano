@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.TextView;
 public class ResultActivity extends AppCompatActivity {
     private static final int DELAY_TIME = 2500; // 2 seconds delay
@@ -23,7 +24,7 @@ public class ResultActivity extends AppCompatActivity {
         scoreTextView.setText("You Score: " + totalScore);
 
         // Delay and navigate to MainActivity
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             addScoreToRecord(totalScore);
             goToMainActivity();
         }, DELAY_TIME);

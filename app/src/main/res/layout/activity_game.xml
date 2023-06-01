@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/stadium" />
+        android:src="@drawable/stadium"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/score_text_view"
@@ -28,6 +29,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="0dp"
         android:scaleType="centerInside"
-        android:src="@drawable/soccer_ball" />
+        android:src="@drawable/soccer_ball"
+        tools:ignore="ContentDescription" />
 
 </RelativeLayout>
