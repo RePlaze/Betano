@@ -18,7 +18,7 @@ import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class RecordActivity1 extends AppCompatActivity {
+public class RecordFragment extends AppCompatActivity {
     private LinearLayout scoresLayout;
     private ScoreDao scoreDao;
     private static final String PREFS_NAME = "MyPrefs";
@@ -83,7 +83,6 @@ public class RecordActivity1 extends AppCompatActivity {
         TextView rankTextView = new TextView(this);
         rankTextView.setLayoutParams(params);
         rankTextView.setTextAppearance(android.R.style.TextAppearance_Medium);
-//        rankTextView.setText(getString(R.string.record_rank, rank));
         rankTextView.setTextSize(32); // Increase text size
         rankTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
         rankTextView.setTypeface(null, Typeface.BOLD_ITALIC);
